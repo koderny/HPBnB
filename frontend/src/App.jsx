@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import * as sessionActions from './store/session';
-import Home from './components/Home/Home';
-import Spots from './components/Spots/Spots';
+import Home from './components/Home/SpotsList/Home';
+import SpotDetails from './components/SpotDetails/SpotDetails';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -38,8 +38,8 @@ const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: '/spots',
-        element: <Spots />
+        path: '/SpotDetails',
+        element: <SpotDetails />
       }
     ]
   }
