@@ -1,44 +1,49 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+// import { Link, useNavigate } from "react-router-dom";
 import { getAllSpotsThunk } from "../../../store/spots";
-import { csrfFetch } from "../../../store/csrf";
+
 
 const SpotsList = () => {
 
+    const dispatch = useDispatch();
+    
+    const allSpots = useSelector((state) => state.spots.allSpots);
+    
+
     const [spots, setSpots] = useState([])
     const [isLoaded, setIsLoaded] = useState(false);
-
+    
+    
     useEffect(() => {
-        const getData = async () => {
-            const res = await csrfFetch('/api/spots');
-            const data = await res.json();
-            // console.log(data)
-            setSpots(data);
+
+        const getAllSpots = async () => {
+            
+            dispatch(getAllSpotsThunk());
             setIsLoaded(true);
-
         }
-
+        
+        
         if (!isLoaded) {
-            getData();
+            getAllSpots();
         }
     }, [spots, isLoaded])
+    
+    console.log(spots);
 
-    console.log(spots, "----> Spots")
-
-
-
+    if(isLoaded) {
     return (
-
+    
         <>
             <h1>Available Spots</h1>
             <ul className="spots-list">
-                {spots.map((spot, idx) => (
+                {spots.Spots.map((spot, idx) => (
                     <li key={spot.id}>{spots.spot} </li>
                 ))}
             </ul>
         </>
     );
+    }
 }
 
 export default SpotsList;

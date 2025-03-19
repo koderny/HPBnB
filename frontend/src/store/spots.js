@@ -7,7 +7,7 @@ import { csrfFetch } from "./csrf";
 const GET_ALL_SPOTS = 'spots/getAll';
 
 
-// Action Types
+// Action Creations
 const getAllSpots = (spots) => {
     return {
         type: GET_ALL_SPOTS,
@@ -15,15 +15,15 @@ const getAllSpots = (spots) => {
     }
 }
 
-const stopDetails = (spot) => {
-    return {
-        type: SPOT_DETAILS,
-        paylod: spot
-    }
-}
+// const spotDetails = (spot) => {
+//     return {
+//         type: SPOT_DETAILS,
+//         paylod: spot
+//     }
+// }
 
 
-// Thunks
+// THUNK
 
 export const getAllSpotsThunk = () => async (dispatch) => {
     try {
@@ -31,6 +31,7 @@ export const getAllSpotsThunk = () => async (dispatch) => {
 
         if (res.ok) {
             const data = await res.json();
+            dispatch(getAllSpots(data))
         } else {
             throw res;
         }
@@ -39,33 +40,51 @@ export const getAllSpotsThunk = () => async (dispatch) => {
     }
 };
 
-export const spotDetailsThunk = () => async (dispatch) => {
-    try {
-        const res = await csrfFetch('api/spots');
+// export const spotDetailsThunk = () => async (dispatch) => {
+//     try {
+//         const res = await csrfFetch('api/spots');
 
-        if (res.ok) {
-            const data = await res.json();
-        } else {
-            throw res;
-        }
-    } catch (error) {
-        console.log(error)
-    }
-}
+//         if (res.ok) {
+//             const data = await res.json();
+//         } else {
+//             throw res;
+//         }
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
+
 
 // Reducers
-let initialState = { spots: [] };
+
+let initialState = { 
+    byId: {},
+    allSpots: []
+};
 
 function spotsReducer(state = initialState, action) {
-    let newState = {};
-    switch (action.type) {
+    let newState;
 
+    switch (action.type) {
         case "GET_ALL_SPOTS":
-            return { ...state, user: action.payload };
-        default:
+            newState = { ...state };
+            let spots = action.payload;
+
+            newState.allSpots = spots;
+
+            const newById = {...newState.byId}
+
+            for (let spot of spots) {
+                newById[spot.id] = spot;
+            }
+
+            newState.byId = newById;
+            
             return newState;
+        default:
+            return state;
     }
 
-};
+}
 
 export default spotsReducer;
