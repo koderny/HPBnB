@@ -3,35 +3,28 @@ import { csrfFetch } from "./csrf";
 
 
 
-// Action Types
-const GET_ALL_SPOTS = 'spots/getAll';
+// ACTION TYPES
+const GET_ALL_SPOTS = 'spots/getAllSpots';
 
 
-// Action Creations
-const getAllSpots = (spots) => {
-    return {
+// ACTION CREATIONS
+const getAllSpotsAction = (data) => ({
         type: GET_ALL_SPOTS,
-        payload: spots
-    }
-}
+        payload: data
+})
 
-// const spotDetails = (spot) => {
-//     return {
-//         type: SPOT_DETAILS,
-//         paylod: spot
-//     }
-// }
 
 
 // THUNK
 
 export const getAllSpotsThunk = () => async (dispatch) => {
+    
     try {
-        const res = await csrfFetch('api/spots');
+        const res = await csrfFetch('/api/spots/');
 
         if (res.ok) {
             const data = await res.json();
-            dispatch(getAllSpots(data))
+            dispatch(getAllSpotsAction(data))
         } else {
             throw res;
         }
@@ -40,45 +33,30 @@ export const getAllSpotsThunk = () => async (dispatch) => {
     }
 };
 
-// export const spotDetailsThunk = () => async (dispatch) => {
-//     try {
-//         const res = await csrfFetch('api/spots');
 
-//         if (res.ok) {
-//             const data = await res.json();
-//         } else {
-//             throw res;
-//         }
-//     } catch (error) {
-//         console.log(error)
-//     }
-// }
+// REDUCERS
 
-
-// Reducers
-
-let initialState = { 
-    byId: {},
-    allSpots: []
+const initialState = { 
+    allSpots: [],
+    byId: {}
 };
 
 function spotsReducer(state = initialState, action) {
     let newState;
 
     switch (action.type) {
-        case "GET_ALL_SPOTS":
-            newState = { ...state };
-            let spots = action.payload;
+        case GET_ALL_SPOTS:
+            const spotsArr = action.payload.Spots;
+    
+            newState = { ...state};
+            newState.allSpots = spotsArr;
 
-            newState.allSpots = spots;
-
-            const newById = {...newState.byId}
-
-            for (let spot of spots) {
-                newById[spot.id] = spot;
+            let newByIdSpots = {} ;
+            for (let spot of spotsArr) {
+                newByIdSpots[spot.id] = spot;
             }
 
-            newState.byId = newById;
+            newState.byId = newByIdSpots;
             
             return newState;
         default:
