@@ -12,27 +12,27 @@ module.exports = {
     await SpotImage.bulkCreate([
       {
         spotId: 1,
-        url: "https://spotImage1",
+        url: "https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg",
         preview: true
       },
       {
         spotId: 2,
-        url: "https://spotImage2",
+        url: "https://images.pexels.com/photos/186077/pexels-photo-186077.jpeg",
         preview: true
       },
       {
         spotId: 3,
-        url: "https://spotImage3",
+        url: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg",
         preview: true
       },
       {
         spotId: 4,
-        url: "https://spotImage4",
+        url: "https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg",
         preview: true
       },
       {
         spotId: 5,
-        url: "https://spotImage5",
+        url: "https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg",
         preview: true
       },
 
