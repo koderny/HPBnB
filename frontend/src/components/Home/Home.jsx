@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllSpotsThunk } from "../../store/spots";
 import SpotTile from "./SpotTile";
 import './Home.css';
-import { useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import Navigation from '../Navigation/Navigation.jsx'
 
 
 const Home = () => {
-    
+
     const dispatch = useDispatch();
-    
     const navigate = useNavigate();
-    
+
     const spots = useSelector((state) => state.spots.allSpots);
     const [isLoaded, setIsLoaded] = useState(false);
 
@@ -22,7 +22,6 @@ const Home = () => {
         const getAllSpots = async () => {
 
             await dispatch(getAllSpotsThunk());
-            console.log("home")
             setIsLoaded(true);
         }
 
@@ -50,10 +49,10 @@ const Home = () => {
                 <div className="tile-list-container">
                     {
                         spots.map((spot, idx) => (
-                            <div 
-                            className="tile-container" 
-                            key={`${idx}}-${spot.id}`}
-                            onClick={(e)=> goToSpotDetail(e, spot)}
+                            <div
+                                className="tile-container"
+                                key={`${idx}}-${spot.id}`}
+                                onClick={(e) => goToSpotDetail(e, spot)}
                             >
                                 <SpotTile spot={spot} />
                             </div>
