@@ -11,15 +11,10 @@ function Layout() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    async function getData() {
-      await dispatch (sessionActions.restoreUser())
+    dispatch(sessionActions.restoreUser()).then(() => {
       setIsLoaded(true)
-    }
-    getData();
-    // dispatch(sessionActions.restoreUser()).then(() => {
-    //   setIsLoaded(true)
-    // });
-  }, [dispatch, isLoaded]);
+    });
+  }, [dispatch]);
 
   return (
     <>
