@@ -63,27 +63,27 @@ export const getASpotThunk = (spotId) => async (dispatch) => {
 }
 
 //CREATE A SPOT
-export const createASpotThunk = (user) => async (dispatch) => {
-    const { address, city, state, country, lat, lng, name, description, price } = user;
+export const createASpotThunk = (spot) => async (dispatch) => {
+    const { address, city, state, country, lat, lng, name, description, price } = spot;
     const response = await csrfFetch("/api/spots/", {
-      method: "POST",
-      body: JSON.stringify({
-        address,
-        city,
-        state,
-        country,
-        lat,
-        lng,
-        name,
-        description,
-        price
-      })
+        method: "POST",
+        body: JSON.stringify({
+            address,
+            city,
+            state,
+            country,
+            lat,
+            lng,
+            name,
+            description,
+            price
+        })
     });
-    const data = await response.json();
-    dispatch(setSpot(data.spot));
-    return response;
-  };
 
+    const data = await res.json();
+    dispatch(createASpot(data.spot));
+    return res;
+};
 
 // REDUCERS
 
@@ -128,8 +128,6 @@ function spotsReducer(state = initialState, action) {
 
         case CREATE_A_SPOT:
             return { ...state, user: action.payload };
-
-
 
 
         default:

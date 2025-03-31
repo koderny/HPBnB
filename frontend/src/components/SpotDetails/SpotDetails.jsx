@@ -40,6 +40,7 @@ const SpotDetails = () => {
             <h1>Hosted by {`${spot.Owner.firstName} ${spot.Owner.lastName}`}</h1>
             <span>{`${spot.description}`}</span>
             <h2>⭐️ WORK IN PROGRESS</h2>
+            
         </div>
     )
     }
