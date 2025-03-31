@@ -5,21 +5,17 @@ import Navigation from './components/Navigation';
 import * as sessionActions from './store/session';
 import Home from './components/Home';
 import SpotDetails from './components/SpotDetails';
+import CreateASpot from './components/CreateASpot/CreateASpot';
 
 function Layout() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    async function getData() {
-      await dispatch (sessionActions.restoreUser())
+    dispatch(sessionActions.restoreUser()).then(() => {
       setIsLoaded(true)
-    }
-    getData();
-    // dispatch(sessionActions.restoreUser()).then(() => {
-    //   setIsLoaded(true)
-    // });
-  }, [dispatch, isLoaded]);
+    });
+  }, [dispatch]);
 
   return (
     <>
@@ -40,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: '/spots/:id',
         element: <SpotDetails />
+      },
+      {
+        path: '/newspot',
+        element: <CreateASpot />
       }
     ]
   }

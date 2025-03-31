@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
@@ -8,24 +8,35 @@ import logo from '/public/logo.png';
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
 
-  return (
-    <header className = "nav">
-    <div className="nav-bar-container">
+  const navigate = useNavigate();
+  const goToHome = () => {
+    navigate('/')
+  }
 
-    <ul>
-      
-        <NavLink to="/"> <img src={logo} className="logo-container"/> </NavLink>
+  return (
+
+    <>
+
+      <NavLink to="/"> <img src= {logo} className="logo-container" onClick={goToHome} /></NavLink>
 
       {isLoaded && (
         
-         <ProfileButton className= "session-menu" user={sessionUser} />
-  
+        sessionUser && <NavLink to="/newspot" className="create-a-spot-container">Create a Spot</NavLink>
+
+
       )}
-    </ul>
-    </div>
-    </header>
-    
+
+      {isLoaded && (
+        
+          <ProfileButton user={sessionUser} className="session-button" />
+
+      )}
+
+    </>
+
   );
 }
+
+
 
 export default Navigation;

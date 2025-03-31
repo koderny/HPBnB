@@ -133,17 +133,19 @@ router.get('/', async (req, res, next) => {
 
 
 // Get Spot by id
+
 router.get('/:id', async (req, res, next) => {
   try {
     const spot = await Spot.findByPk(req.params.id,
       {
-        include: [
-          {
-            model: User,
-            as: 'Owner',
-            attributes: ['id', 'firstName', 'lastName']
-          }
-        ]
+        include: [{
+          model: SpotImage,
+          attributes: ['spotId', 'url', 'preview']
+        }, {
+          model: User,
+          as: "Owner",
+          attributes: ['id', 'firstName', 'lastName']
+        }]
       });
 
     if (!spot) {
@@ -157,8 +159,6 @@ router.get('/:id', async (req, res, next) => {
     next(error);
   }
 });
-
-
 
 
 // Get spots by owner id
