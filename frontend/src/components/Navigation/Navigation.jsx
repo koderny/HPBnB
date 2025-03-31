@@ -14,23 +14,29 @@ function Navigation({ isLoaded }) {
   }
 
   return (
-    <header className="nav-bar">
 
-      <NavLink to="/"> <img onClick={goToHome} src={logo} className="logo-container" img /> </NavLink>
+    <>
 
+      <NavLink to="/"> <img src= {logo} className="logo-container" onClick={goToHome} /></NavLink>
 
       {isLoaded && (
+        
+        sessionUser && <NavLink to="/newspot" className="create-a-spot-container">Create a Spot</NavLink>
 
-
-        <div className="session-container">
-          <ProfileButton className="session-menu" user={sessionUser} />
-        </div>
 
       )}
 
-    </header>
+      {isLoaded && (
+        
+          <ProfileButton user={sessionUser} className="session-button" />
+
+      )}
+
+    </>
 
   );
 }
+
+
 
 export default Navigation;
