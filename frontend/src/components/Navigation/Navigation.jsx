@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
-import logo from '/public/logo.png';
+import logo from '/src/logo.png';
 
 
 function Navigation({ isLoaded }) {
@@ -21,10 +21,11 @@ function Navigation({ isLoaded }) {
 
       {isLoaded && (
         
-        sessionUser && <NavLink to="/newspot" className="create-a-spot-container">Create a Spot</NavLink>
+        sessionUser && <NavLink to="/spots/new" className="create-a-spot-container">Create a Spot</NavLink>
 
 
       )}
+
 
       {isLoaded && (
         
