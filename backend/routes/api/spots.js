@@ -42,7 +42,6 @@ const validateSpot = [
 ];
 
 
-
 // Validation middleware for review data
 // TODO: Do this validation
 const validateReview = [
@@ -104,13 +103,41 @@ router.get('/', async (req, res, next) => {
 //Create a Spot
 router.post('/', requireAuth, validateSpot, async (req, res, next) => {
   try {
-    const { address, city, state, country, lat, lng, name, description, price } = req.body
-    console.log(address, city, state, country, lat, lng, name, description, price)
+    const { address, city, state, country, lat, lng, name, description, price, previewImgUrl, url1, url2, url3, url4 } = req.body
 
     const newSpot = await Spot.create({
       ownerId: req.user.id,
       address, city, state, country, lat, lng, name, description, price
     });
+
+    await SpotImage.bulkCreate([
+      {
+        spotId: newSpot.id,
+        url: previewImgUrl,
+        preview: true
+      },
+      {
+        spotId: newSpot.id,
+        url: url1,
+        preview: false
+      },
+      {
+        spotId: newSpot.id,
+        url: url2,
+        preview: false
+      },
+      {
+        spotId: newSpot.id,
+        url: url3,
+        preview: false
+      },
+      {
+        spotId: newSpot.id,
+        url: url4,
+        preview: false
+      },
+
+    ])
 
     res.status(201);
     return res.json(newSpot);

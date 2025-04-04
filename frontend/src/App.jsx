@@ -38,9 +38,13 @@ const router = createBrowserRouter([
         element: <SpotDetails />
       },
       {
-        path: '/newspot',
+        path: 'spots/new',
         element: <CreateASpot />
-      }
+      },
+      // {
+      //   path: "spots/current",
+      //   element: <UserSpots />
+      // }
     ]
   }
 ]);

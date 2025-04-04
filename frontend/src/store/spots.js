@@ -48,13 +48,13 @@ export const getAllSpotsThunk = () => async (dispatch) => {
 
 //GET A SPOT
 export const getASpotThunk = (spotId) => async (dispatch) => {
-
+    console.log(spotId)
     try {
         const res = await csrfFetch(`/api/spots/${spotId}`);
 
         if (res.ok) {
             const data = await res.json();
-            console.log(data, "--------> HERE")
+            // console.log(data, "--------> HERE")
             dispatch(getASpot(data));
         }
     } catch (error) {
@@ -64,25 +64,24 @@ export const getASpotThunk = (spotId) => async (dispatch) => {
 
 //CREATE A SPOT
 export const createASpotThunk = (spot) => async (dispatch) => {
-    const { address, city, state, country, lat, lng, name, description, price } = spot;
-    const response = await csrfFetch("/api/spots/", {
-        method: "POST",
-        body: JSON.stringify({
-            address,
-            city,
-            state,
-            country,
-            lat,
-            lng,
-            name,
-            description,
-            price
-        })
-    });
 
-    const data = await res.json();
-    dispatch(createASpot(data.spot));
-    return res;
+    try {
+        const res = await csrfFetch('/api/spots/', {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(spot),
+        });
+
+        if (res.ok) {
+            const data = await res.json();
+            dispatch(createASpot(data));
+            return data;
+        }
+        
+        throw res;
+    } catch (error) {
+        return error; 
+    }
 };
 
 // REDUCERS
@@ -127,7 +126,10 @@ function spotsReducer(state = initialState, action) {
             return newState;
 
         case CREATE_A_SPOT:
-            return { ...state, user: action.payload };
+            const newSpot = action.payload;
+            newState = { ...state };
+            newState.allSpots = [...state.allSpots, newSpot]
+            newState.byId = { ...newState.byId, [newSpot.id]: newSpot };
 
 
         default:
