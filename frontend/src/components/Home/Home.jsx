@@ -17,7 +17,7 @@ const Home = () => {
     const [isLoaded, setIsLoaded] = useState(false);
 
     const sessionUser = useSelector(state => state.session.user);
-    console.log(sessionUser, "we are here")
+    // console.log(sessionUser, "we are here")
 
 
     useEffect(() => {

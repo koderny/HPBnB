@@ -40,6 +40,11 @@ function ProfileButton({ user }) {
     closeMenu();
   };
 
+  // const navigate = useNavigate();
+  //   const goToManageSpots = () => {
+  //     navigate('/spots/current')
+  //   }
+
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
@@ -49,14 +54,18 @@ function ProfileButton({ user }) {
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
-          <>
-            <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
-            <li>{user.email}</li>
-            <li>
+          <div>
+            <div>
+              <h4>Hello, {user.username}</h4>
+              <h4>{user.email}</h4>
+            </div>
+            {/* <div>
+              <button onClick={goToManageSpots}>Manage Spots</button>
+            </div> */}
+            <div>
               <button onClick={logout}>Log Out</button>
-            </li>
-          </>
+            </div>
+          </div>
         ) : (
           <>
             <OpenModalMenuItem
